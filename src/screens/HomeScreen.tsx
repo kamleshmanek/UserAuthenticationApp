@@ -44,7 +44,6 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.container}>
-          <View style={styles.card}>
             <View style={styles.headerContent}>
               <Text style={styles.welcomeText}>
                 {strings.home?.welcome || 'Welcome back'},
@@ -58,15 +57,6 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
             </View>
 
             <View style={styles.contentContainer}>
-              {/* <View style={styles.statsContainer}>
-                {stats.map((stat, index) => (
-                  <View key={index} style={styles.statItem}>
-                    <Text style={styles.statValue}>{stat.value}</Text>
-                    <Text style={styles.statLabel}>{stat.label}</Text>
-                  </View>
-                ))}
-              </View> */}
-
               <TouchableOpacity 
                 style={styles.logoutButton} 
                 onPress={handleLogout}
@@ -77,7 +67,6 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
                 </Text>
               </TouchableOpacity>
             </View>
-          </View>
         </View>
       </ScrollView>
     </LinearGradient>
@@ -99,12 +88,8 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: moderateScale(20),
     paddingTop: verticalScale(40),
-    justifyContent:"center"
-  },
-  card: {
-    borderRadius: moderateScale(15),
-    padding: moderateScale(20),
-    marginTop: verticalScale(20),
+    justifyContent:"center",
+     margin: 30,
   },
   headerContent: {
     marginBottom: verticalScale(30),

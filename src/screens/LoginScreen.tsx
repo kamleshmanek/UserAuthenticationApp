@@ -79,18 +79,16 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
     if (!validateForm()) {
       // Check for specific validation errors
       if (email && !/\S+@\S+\.\S+/.test(email)) {
-        Alert.alert(
-          'Invalid Format',
-          'Please enter a valid email address ',
-          [{ text: 'OK' }]
-        );
+        Alert.alert('Invalid Format', 'Please enter a valid email address ', [
+          { text: 'OK' },
+        ]);
         return;
       }
       if (password && password.length < 6) {
         Alert.alert(
           'Invalid Password',
           'Password must be at least 6 characters long',
-          [{ text: 'OK' }]
+          [{ text: 'OK' }],
         );
         return;
       }
@@ -104,7 +102,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
         'Login Failed',
         'The email or password you entered is incorrect. Please try again.',
         [{ text: 'OK' }],
-        { cancelable: true }
+        { cancelable: true },
       );
     }
   };
@@ -116,77 +114,59 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
     >
-      <View style={styles.scrollContainer}>
-        <View style={styles.container}>
-          <View style={styles.card}>
-            <View style={styles.formContainer}>
-              <View style={styles.formContent}>
-                <View style={styles.headerContent}>
-                  <Text style={styles.welcomeText}>
-                    {strings.login.welcomeBack}
-                  </Text>
-                  <Text style={styles.subHeaderText}>
-                    {strings.login.signInToContinue}
-                  </Text>
-                </View>
+      <View style={styles.formContainer}>
+        <View style={styles.headerContent}>
+          <Text style={styles.welcomeText}>{strings.login.welcomeBack}</Text>
+          <Text style={styles.subHeaderText}>
+            {strings.login.signInToContinue}
+          </Text>
+        </View>
 
-                <View style={styles.inputGroup}>
-                  <CustomInput
-                    label={strings.common.email}
-                    placeholder={strings.login.emailPlaceholder}
-                    value={email}
-                    onChangeText={setEmail}
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    error={errors.email}
-                  />
+        <View style={styles.inputGroup}>
+          <CustomInput
+            label={strings.common.email}
+            placeholder={strings.login.emailPlaceholder}
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            error={errors.email}
+          />
 
-                  <CustomInput
-                    label={strings.common.password}
-                    placeholder={strings.login.passwordPlaceholder}
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry={!showPassword}
-                    error={errors.password}
-                    rightIcon={
-                      <FontAwesomeIcon
-                        icon={showPassword ? faEyeSlash : faEye}
-                        size={moderateScale(20)}
-                        color={colors.text.secondary}
-                      />
-                    }
-                    onRightIconPress={togglePasswordVisibility}
-                    autoCapitalize="none"
-                    returnKeyType="done"
-                    onSubmitEditing={handleLogin}
-                  />
-                  <View style={styles.buttonContainer}>
-                    <Button
-                      title={
-                        isLoading
-                          ? strings.common.loading
-                          : strings.login.signIn
-                      }
-                      onPress={handleLogin}
-                      fullWidth
-                      disabled={isLoading}
-                    />
-                  </View>
-                </View>
-
-                <View style={styles.footer}>
-                  <Text style={styles.footerText}>
-                    {strings.login.dontHaveAccount}
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate('Signup')}
-                  >
-                    <Text style={styles.link}>{strings.login.signUp}</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
+          <CustomInput
+            label={strings.common.password}
+            placeholder={strings.login.passwordPlaceholder}
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry={!showPassword}
+            error={errors.password}
+            rightIcon={
+              <FontAwesomeIcon
+                icon={showPassword ? faEyeSlash : faEye}
+                size={moderateScale(20)}
+                color={colors.text.secondary}
+              />
+            }
+            onRightIconPress={togglePasswordVisibility}
+            autoCapitalize="none"
+            returnKeyType="done"
+            onSubmitEditing={handleLogin}
+          />
+          <View style={styles.buttonContainer}>
+            <Button
+              title={isLoading ? strings.common.loading : strings.login.signIn}
+              onPress={handleLogin}
+              fullWidth
+              disabled={isLoading}
+            />
           </View>
+        </View>
+
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>{strings.login.dontHaveAccount}</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+            <Text style={styles.link}>{strings.login.signUp}</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </LinearGradient>
@@ -197,16 +177,7 @@ const styles = StyleSheet.create({
   gradientContainer: {
     flex: 1,
   },
-  scrollContainer: {
-    flex: 1,
-    backgroundColor: 'transparent',
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-    backgroundColor: 'transparent',
-    paddingBottom: verticalScale(30),
-  },
+  
   headerContent: {
     marginVertical: verticalScale(60),
     marginBottom: verticalScale(80),
@@ -221,23 +192,10 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(16),
     color: colors.text.secondary,
   },
-  card: {
-    flex: 1,
-    borderTopLeftRadius: moderateScale(30),
-    borderTopRightRadius: moderateScale(30),
-    marginTop: verticalScale(30),
-    marginHorizontal: 0,
-    padding: moderateScale(30),
-    paddingTop: verticalScale(40),
-    shadowColor: colors.shadow,
-    shadowOffset: { width: 0, height: verticalScale(-3) },
-    shadowOpacity: 0.1,
-    shadowRadius: moderateScale(20),
-    elevation: 10,
-  },
   formContainer: {
     flex: 1,
     justifyContent: 'center',
+    margin: 30,
   },
   formContent: {
     flex: 1,
@@ -247,7 +205,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: verticalScale(10),
   },
-  
+
   footer: {
     flexDirection: 'row',
     justifyContent: 'center',

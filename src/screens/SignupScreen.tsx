@@ -85,67 +85,10 @@ const SignupScreen: React.FC<Props> = ({ navigation }) => {
   };
 
   const handleSignup = async (): Promise<void> => {
-    // First validate the form
     if (!validateForm()) {
-      // Check for specific validation errors
-      if (!name.trim()) {
-        Alert.alert(
-          'Missing Information',
-          'Please enter your full name',
-          [{ text: 'OK' }]
-        );
-        return;
-      }
-      
-      if (!email.trim()) {
-        Alert.alert(
-          'Missing Information',
-          'Please enter your email address',
-          [{ text: 'OK' }]
-        );
-        return;
-      }
-      
-      if (!/\S+@\S+\.\S+/.test(email)) {
-        Alert.alert(
-          'Invalid Email',
-          'Please enter a valid email address',
-          [{ text: 'OK' }]
-        );
-        return;
-      }
-      
-      if (!password) {
-        Alert.alert(
-          'Missing Information',
-          'Please enter a password',
-          [{ text: 'OK' }]
-        );
-        return;
-      }
-      
-      if (password.length < 6) {
-        Alert.alert(
-          'Password Too Short',
-          'Password must be at least 6 characters long',
-          [{ text: 'OK' }]
-        );
-        return;
-      }
-      
-      if (password !== confirmPassword) {
-        Alert.alert(
-          'Password Mismatch',
-          'The passwords you entered do not match',
-          [{ text: 'OK' }]
-        );
-        return;
-      }
-      
       return;
     }
 
-    // If form is valid, attempt to register
     const success = await register({ name, email, password });
     if (success) {
       navigation.goBack();
@@ -154,7 +97,7 @@ const SignupScreen: React.FC<Props> = ({ navigation }) => {
         'Registration Failed',
         'An account with this email already exists. Please use a different email or sign in.',
         [{ text: 'OK' }],
-        { cancelable: true }
+        { cancelable: true },
       );
     }
   };
@@ -166,102 +109,88 @@ const SignupScreen: React.FC<Props> = ({ navigation }) => {
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
     >
-      <View style={styles.scrollContainer}>
-        <View style={styles.container}>
-          <View style={styles.card}>
-            <View style={styles.formContainer}>
-              <View style={styles.formContent}>
-                <View style={styles.headerContent}>
-                  <Text style={styles.welcomeText}>
-                    {strings.signup.createAccount}
-                  </Text>
-                  <Text style={styles.subHeaderText}>
-                    {strings.signup.signupToContinue}
-                  </Text>
-                </View>
+      <View style={styles.formContent}>
+        <View style={styles.headerContent}>
+          <Text style={styles.welcomeText}>{strings.signup.createAccount}</Text>
+          <Text style={styles.subHeaderText}>
+            {strings.signup.signupToContinue}
+          </Text>
+        </View>
 
-                <View style={styles.inputGroup}>
-                  <CustomInput
-                    label={strings.common.fullName}
-                    placeholder={strings.signup.fullNamePlaceholder}
-                    value={name}
-                    onChangeText={setName}
-                    autoCapitalize="words"
-                    error={errors.name}
-                  />
+        <View style={styles.inputGroup}>
+          <CustomInput
+            label={strings.common.fullName}
+            placeholder={strings.signup.fullNamePlaceholder}
+            value={name}
+            onChangeText={setName}
+            autoCapitalize="words"
+            error={errors.name}
+          />
 
-                  <CustomInput
-                    label={strings.common.email}
-                    placeholder={strings.login.emailPlaceholder}
-                    value={email}
-                    onChangeText={setEmail}
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    error={errors.email}
-                  />
+          <CustomInput
+            label={strings.common.email}
+            placeholder={strings.login.emailPlaceholder}
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            error={errors.email}
+          />
 
-                  <CustomInput
-                    label={strings.common.password}
-                    placeholder={strings.login.passwordPlaceholder}
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry={!showPassword}
-                    error={errors.password}
-                    rightIcon={
-                      <FontAwesomeIcon
-                        icon={showPassword ? faEyeSlash : faEye}
-                        size={moderateScale(20)}
-                        color={colors.text.secondary}
-                      />
-                    }
-                    onRightIconPress={togglePasswordVisibility}
-                    autoCapitalize="none"
-                  />
+          <CustomInput
+            label={strings.common.password}
+            placeholder={strings.login.passwordPlaceholder}
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry={!showPassword}
+            error={errors.password}
+            rightIcon={
+              <FontAwesomeIcon
+                icon={showPassword ? faEyeSlash : faEye}
+                size={moderateScale(20)}
+                color={colors.text.secondary}
+              />
+            }
+            onRightIconPress={togglePasswordVisibility}
+            autoCapitalize="none"
+          />
 
-                  <CustomInput
-                    label={strings.common.confirmPassword}
-                    placeholder={strings.signup.confirmPasswordPlaceholder}
-                    value={confirmPassword}
-                    onChangeText={setConfirmPassword}
-                    secureTextEntry={!showConfirmPassword}
-                    error={errors.confirmPassword}
-                    rightIcon={
-                      <FontAwesomeIcon
-                        icon={showConfirmPassword ? faEyeSlash : faEye}
-                        size={moderateScale(20)}
-                        color={colors.text.secondary}
-                      />
-                    }
-                    onRightIconPress={toggleConfirmPasswordVisibility}
-                    autoCapitalize="none"
-                    returnKeyType="done"
-                  />
-                </View>
+          <CustomInput
+            label={strings.common.confirmPassword}
+            placeholder={strings.signup.confirmPasswordPlaceholder}
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            secureTextEntry={!showConfirmPassword}
+            error={errors.confirmPassword}
+            rightIcon={
+              <FontAwesomeIcon
+                icon={showConfirmPassword ? faEyeSlash : faEye}
+                size={moderateScale(20)}
+                color={colors.text.secondary}
+              />
+            }
+            onRightIconPress={toggleConfirmPasswordVisibility}
+            autoCapitalize="none"
+            returnKeyType="done"
+          />
+        </View>
 
-                <View style={styles.buttonContainer}>
-                  <Button
-                    title={
-                      isLoading ? strings.common.loading : strings.login.signUp
-                    }
-                    onPress={handleSignup}
-                    fullWidth
-                    disabled={isLoading}
-                  />
-                </View>
+        <View style={styles.buttonContainer}>
+          <Button
+            title={isLoading ? strings.common.loading : strings.login.signUp}
+            onPress={handleSignup}
+            fullWidth
+            disabled={isLoading}
+          />
+        </View>
 
-                <View style={styles.footer}>
-                  <Text style={styles.footerText}>
-                    {strings.signup.alreadyHaveAccount}
-                  </Text>
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate('Login')}
-                  >
-                    <Text style={styles.link}>{strings.login.signIn}</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-          </View>
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>
+            {strings.signup.alreadyHaveAccount}
+          </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <Text style={styles.link}>{strings.login.signIn}</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </LinearGradient>
@@ -271,16 +200,6 @@ const SignupScreen: React.FC<Props> = ({ navigation }) => {
 const styles = StyleSheet.create({
   gradientContainer: {
     flex: 1,
-  },
-  scrollContainer: {
-    flex: 1,
-    backgroundColor: 'transparent',
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-    backgroundColor: 'transparent',
-    paddingBottom: verticalScale(30),
   },
   headerContent: {
     marginVertical: verticalScale(40),
@@ -296,27 +215,10 @@ const styles = StyleSheet.create({
     fontSize: moderateScale(16),
     color: colors.text.secondary,
   },
-  card: {
-    flex: 1,
-    borderTopLeftRadius: moderateScale(30),
-    borderTopRightRadius: moderateScale(30),
-    marginTop: verticalScale(30),
-    marginHorizontal: 0,
-    padding: moderateScale(30),
-    paddingTop: verticalScale(40),
-    shadowColor: colors.shadow,
-    shadowOffset: { width: 0, height: verticalScale(-3) },
-    shadowOpacity: 0.1,
-    shadowRadius: moderateScale(20),
-    elevation: 10,
-  },
-  formContainer: {
-    flex: 1,
-    justifyContent: 'center',
-  },
   formContent: {
     flex: 1,
     justifyContent: 'center',
+    margin: 30,
   },
   inputGroup: {},
   buttonContainer: {
