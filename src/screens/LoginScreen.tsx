@@ -75,27 +75,10 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
   }, [user, navigation]);
 
   const handleLogin = async (): Promise<void> => {
-    // First validate the form
     if (!validateForm()) {
-      // Check for specific validation errors
-      if (email && !/\S+@\S+\.\S+/.test(email)) {
-        Alert.alert('Invalid Format', 'Please enter a valid email address ', [
-          { text: 'OK' },
-        ]);
-        return;
-      }
-      if (password && password.length < 6) {
-        Alert.alert(
-          'Invalid Password',
-          'Password must be at least 6 characters long',
-          [{ text: 'OK' }],
-        );
-        return;
-      }
       return;
     }
 
-    // If form is valid, attempt to login
     const success = await login({ email, password });
     if (!success) {
       Alert.alert(
